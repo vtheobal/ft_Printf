@@ -8,20 +8,19 @@ static void	minus_period(char *str, t_stack *stack, int len)
 		stack->symbols++;
 		stack->width--;
 	}
-	ft_putstr_fd("0x", 1);
-	stack->symbols += 2;
 	ft_putstr_fd(str, 1);
 	stack->symbols += len;
-	while (stack->width-- > len + 2)
+	while (stack->width > len)
 	{
 		ft_putchar_fd(' ', 1);
 		stack->symbols++;
+		stack->width--;
 	}
 }
 
 static void	classic(char *str, t_stack *stack, int len)
 {
-	while (stack->width > stack->precision && stack->width-- > len + 2)
+	while (stack->width > stack->precision && stack->width-- > len)
 	{
 		ft_putchar_fd(' ', 1);
 		stack->symbols++;
@@ -31,8 +30,6 @@ static void	classic(char *str, t_stack *stack, int len)
 		len++;
 		ft_putchar_fd('0', 1);
 	}
-	ft_putstr_fd("0x", 1);
-	stack->symbols += 2;
 	ft_putstr_fd(str, 1);
 	stack->symbols += len;
 }
@@ -49,8 +46,6 @@ static void	zero_minus_period(char *str, t_stack *stack)
 			ft_putchar_fd('0', 1);
 			stack->symbols++;
 		}
-		ft_putstr_fd("0x", 1);
-		stack->symbols += 2;
 		ft_putstr_fd(str, 1);
 		stack->symbols += len;
 	}
@@ -61,17 +56,13 @@ static void	zero_minus_period(char *str, t_stack *stack)
 static void	period(char *str, t_stack *stack)
 {
 	int	len;
-	int	i;
 
-	i = 0;
 	len = ft_strlen(str);
 	if (stack->minus)
 	{
-		ft_putstr_fd("0x", 1);
-		stack->symbols += 2;
 		ft_putstr_fd(str, 1);
 		stack->symbols += len;
-		while (stack->width-- > len + 2)
+		while (stack->width-- > len)
 		{
 			ft_putchar_fd(' ', 1);
 			stack->symbols++;
@@ -81,21 +72,22 @@ static void	period(char *str, t_stack *stack)
 		classic(str, stack, len);
 }
 
-void	print_p(unsigned long n, t_stack *stack)
+void	print_x(unsigned int i, t_stack *stack)
 {
 	char	*str;
 
-	if (!n && !stack->precision && stack->dot)
+	if (!i && !stack->precision && stack->dot)
 	{
 		str = malloc(1);
 		*str = 0;
 	}
 	else
-		str = ft_pitoa(n);
+		str = ft_xitoa(i, stack);
 	if (!str)
+	{
 		stack->error = -1;
-	if (!str)
 		return ;
+	}
 	if ((stack->zero && !stack->dot && !stack->minus)
 		|| (stack->dot && stack->minus))
 		zero_minus_period(str, stack);

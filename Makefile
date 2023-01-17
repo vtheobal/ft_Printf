@@ -1,6 +1,6 @@
 NAME	=	libftprintf.a
 
-HEAD	=	ft_printf.h
+HEAD	=	src/ft_printf.h
 
 CFLAGC	=	-Wall -Wextra -Werror
 
@@ -8,16 +8,16 @@ GCC		=	gcc
 
 AR = ar rcs
 
-SRCS	=	ft_printf.c\
-			print_c.c\
-			print_i.c\
-			print_s.c\
-			print_u.c\
-			print_u_utils.c\
-			print_x.c\
-			print_x_utils.c\
-			print_p.c\
-			print_p_utils.c\
+SRCS	=	src/ft_printf.c\
+			src/print_c.c\
+			src/print_i.c\
+			src/print_s.c\
+			src/print_u.c\
+			src/print_u_utils.c\
+			src/print_x.c\
+			src/print_x_utils.c\
+			src/print_p.c\
+			src/print_p_utils.c\
 
 OBJS 	= $(SRCS:%.c=%.o)
 
